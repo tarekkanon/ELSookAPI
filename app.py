@@ -15,6 +15,7 @@ from Modules.Orders.BL import NewOrders
 from Modules.Reviews.BL import NewReview
 from Modules.Reviews.BL import ReviewsList
 from Modules.Reviews.BL import UpdateReview
+from Modules.Shipments.BL import ShipmentsHandler
 
 app = Flask(__name__)
 
@@ -295,4 +296,30 @@ def update_review():
 
 '''
 //All Reviews API
+'''
+
+
+
+
+'''
+All Shipments API
+'''
+@app.route("/shipments/new", methods=["POST"])
+def create_shipment():
+  """create a new shipment."""
+  shipment_data = request.json
+  shipmentId = ShipmentsHandler.AddNewOrderShipment(shipment_data)
+  
+  return jsonify({"message": "shipment created", "ShipmentId" : shipmentId}), 200
+
+@app.route("/shipments/tracker/new_status", methods=["POST"])
+def create_shipment_tracker():
+  """create a new shipment tracker status."""
+  shipment_data = request.json
+  shipmentTrackerId = ShipmentsHandler.AddNewTrackerStatus(shipment_data)
+  
+  return jsonify({"message": "shipment tracker added", "ShipmentTrackerId" : shipmentTrackerId}), 200
+
+'''
+//All Shipments API
 '''
