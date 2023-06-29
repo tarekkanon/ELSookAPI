@@ -11,9 +11,8 @@ class DBHandler():
                         Driver="{SQL Server}",
                         Server = "Kanonz\SQLEXPRESS",
                         Database = "ELSookBase",
-                        User = "sa",
-                        Password = "pioneer",
-                        Trusted_Connection = "yes")
+                        User = "elsookuser",
+                        Password = "pioneer")
         
         self.conn.autocommit = False
         
