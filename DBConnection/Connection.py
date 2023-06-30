@@ -12,8 +12,7 @@ class DBHandler():
                         Server = "Kanonz\SQLEXPRESS",
                         Database = "ELSookBase",
                         User = "sa",
-                        Password = "pioneer",
-                        Trusted_Connection = "yes")
+                        Password = "pioneer")
         
         self.conn.autocommit = False
         

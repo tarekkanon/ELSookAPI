@@ -1,7 +1,9 @@
 import os
 import string
+import jwt
 from mimetypes import MimeTypes 
 from flask import Flask,jsonify, request
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 from random import choices
 
 from Modules.Products.BL import ProductsList
@@ -18,6 +20,9 @@ from Modules.Reviews.BL import UpdateReview
 from Modules.Shipments.BL import ShipmentsHandler
 
 app = Flask(__name__)
+jwt = JWTManager(app)
+
+app.config['JWT_SECRET_KEY'] = 'passphrase'
 
 if __name__ == "__main__":
     app.run(debug=True)
@@ -27,6 +32,7 @@ if __name__ == "__main__":
 All products API's
 '''
 @app.route("/products", methods=["GET"])
+@jwt_required
 def GetAllProductsAPI():
   """Get all products."""
   products = ProductsList.GetAllProducts()
@@ -159,6 +165,8 @@ def login_seller():
   seller = SellerHandler.LoginSeller(seller_data)
   
   if seller:
+    token = create_access_token(identity = seller[0]["SellerEmail"])
+    seller[0]["token"] = token
     return jsonify(seller), 200 
   else:
     return jsonify({"message": "invalid email or password" }), 404
