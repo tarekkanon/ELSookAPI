@@ -1,9 +1,8 @@
 import os
 import string
-import jwt
 from mimetypes import MimeTypes 
 from flask import Flask,jsonify, request
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from random import choices
 
 from Modules.Products.BL import ProductsList
@@ -24,15 +23,13 @@ jwt = JWTManager(app)
 
 app.config['JWT_SECRET_KEY'] = 'passphrase'
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
     
     
 '''
 All products API's
 '''
 @app.route("/products", methods=["GET"])
-@jwt_required
 def GetAllProductsAPI():
   """Get all products."""
   products = ProductsList.GetAllProducts()
@@ -45,13 +42,16 @@ def get_product(product_id):
   return jsonify(product), 200
 
 @app.route("/products", methods=["POST"])
+@jwt_required()
 def create_product():
   """Create a new product."""
+  #print(get_jwt_identity())
   product_data = request.json
   productId = NewProducts.AddNewProduct(product_data)
   return jsonify({"message": "Product created", "ProductId" : productId}), 200
 
 @app.route("/product/images", methods=["POST"])
+@jwt_required()
 def add_product_images():
   """Add all product images."""
   product_images = request.json
@@ -60,6 +60,7 @@ def add_product_images():
 
 
 @app.route("/product/upload_images", methods=["POST"])
+@jwt_required()
 def upload_images():
   """Uploads multiple image files to the server.
 
@@ -172,13 +173,16 @@ def login_seller():
     return jsonify({"message": "invalid email or password" }), 404
   
 @app.route("/sellers/update", methods=["PUT"])
+@jwt_required()
 def update_seller():
   """Update sellers details."""
   seller_data = request.json
   row_count = SellerHandler.UpdateSellerDetails(seller_data)
   return jsonify({"message": "Seller account updated", "rows" : row_count}), 200
 
+
 @app.route("/sellers/update_password", methods=["PUT"])
+@jwt_required()
 def update_seller_password():
   """Update sellers password."""
   seller_data = request.json
@@ -211,6 +215,7 @@ def login_customers():
     return jsonify({"message": "invalid email or password" }), 404
   
 @app.route("/customers/update", methods=["PUT"])
+@jwt_required()
 def update_customers():
   """Update customers details."""
   customers_data = request.json
@@ -218,6 +223,7 @@ def update_customers():
   return jsonify({"message": "customer account updated", "rows" : row_count}), 200
 
 @app.route("/customers/update_password", methods=["PUT"])
+@jwt_required()
 def update_customers_password():
   """Update customers password."""
   customers_data = request.json
@@ -232,6 +238,7 @@ All Orders API
 '''
 
 @app.route("/orders", methods=["GET"])
+@jwt_required()
 def GetAllCustomerOrSellerOrders():
   """Get all customer or seller orders."""
   request_data = request.json
@@ -245,6 +252,7 @@ def GetAllCustomerOrSellerOrders():
 
 
 @app.route("/orders/update", methods=["PUT"])
+@jwt_required()
 def UpdateOrderStatus():
   """Update order status."""
   request_data = request.json
@@ -254,6 +262,7 @@ def UpdateOrderStatus():
   return jsonify({"message": "order status updated", "rows" : row_count}), 200
 
 @app.route("/orderline/update", methods=["PUT"])
+@jwt_required()
 def UpdateOrderLineQtyPrice():
   """Update order line quantity and price."""
   request_data = request.json
@@ -263,6 +272,7 @@ def UpdateOrderLineQtyPrice():
   return jsonify({"message": "order line qty updated", "rows" : row_count}), 200
 
 @app.route("/orders/new", methods=["POST"])
+@jwt_required()
 def create_new_order():
   """Create a order."""
   order_data = request.json
@@ -288,6 +298,7 @@ def get_product_reviews():
   #
 
 @app.route("/reviews/new", methods=["POST"])
+@jwt_required()
 def create_review():
   """create a new review."""
   review_data = request.json
@@ -296,6 +307,7 @@ def create_review():
   return jsonify({"message": "review created", "ReviewId" : reviewId}), 200
   
 @app.route("/reviews/update", methods=["PUT"])
+@jwt_required()
 def update_review():
   """Update review details."""
   review_data = request.json
@@ -331,3 +343,9 @@ def create_shipment_tracker():
 '''
 //All Shipments API
 '''
+
+
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
