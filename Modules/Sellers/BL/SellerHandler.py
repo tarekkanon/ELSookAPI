@@ -28,6 +28,15 @@ def LoginSeller(seller_login):
     
     return result
 
+def LoginSellerSession(seller_login):
+    
+    with Connection.DBHandler() as DBConn:
+        result = DBConn.ReadQuery(SellersQry.QryLoginSellerSession(), (
+        seller_login['SellerId']
+    ))
+    
+    return result
+
 def UpdateSellerDetails(seller_data):
     with Connection.DBHandler() as DBConn:
         result = DBConn.UpdateQuery(SellersQry.QryUpdateSeller(), (

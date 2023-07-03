@@ -172,6 +172,19 @@ def login_seller():
   else:
     return jsonify({"message": "invalid email or password" }), 404
   
+@app.route("/sellers/login_session", methods=["POST"])
+def login_seller_session():
+  """Login seller by id for session."""
+  seller_data = request.json
+  seller = SellerHandler.LoginSellerSession(seller_data)
+  
+  if seller:
+    token = create_access_token(identity = seller[0]["SellerEmail"])
+    seller[0]["token"] = token
+    return jsonify(seller), 200 
+  else:
+    return jsonify({"message": "invalid email or password" }), 404
+  
 @app.route("/sellers/update", methods=["PUT"])
 @jwt_required()
 def update_seller():
@@ -348,4 +361,4 @@ def create_shipment_tracker():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8523 ,debug=True)

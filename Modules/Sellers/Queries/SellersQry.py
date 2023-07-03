@@ -1,6 +1,9 @@
 def QryLoginSeller():
     return "SELECT * FROM [Sellers] WHERE SellerEmail = ? AND SellerPassword = ?;"
 
+def QryLoginSellerSession():
+    return "SELECT * FROM [Sellers] WHERE SellerId = ?;"
+
 def QryGetAllSellers():
     return "SELECT * FROM [Sellers];"
 
