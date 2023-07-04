@@ -50,7 +50,7 @@ def create_product():
   productId = NewProducts.AddNewProduct(product_data)
   return jsonify({"message": "Product created", "ProductId" : productId}), 200
 
-@app.route("/product/images", methods=["POST"])
+@app.route("/products/images", methods=["POST"])
 @jwt_required()
 def add_product_images():
   """Add all product images."""
@@ -59,7 +59,7 @@ def add_product_images():
   return jsonify({"message": "Images added", "LastImageId" : imageId}), 200
 
 
-@app.route("/product/upload_images", methods=["POST"])
+@app.route("/products/upload_images", methods=["POST"])
 @jwt_required()
 def upload_images():
   """Uploads multiple image files to the server.
