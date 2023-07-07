@@ -41,6 +41,14 @@ def get_product(product_id):
   product = ProductsList.GetProduct(product_id)
   return jsonify(product), 200
 
+@app.route("/products/seller", methods=["GET"])
+@jwt_required()
+def get_seller_products():
+  """Get sellers products list."""
+  seller_data = request.json
+  products = ProductsList.GetAllSellerProducts(seller_data['SellerId'])
+  return jsonify(products), 200
+
 @app.route("/products", methods=["POST"])
 @jwt_required()
 def create_product():

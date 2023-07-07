@@ -2,6 +2,9 @@
 def QryAllProducts():
     return "SELECT * FROM Products WHERE ProductStatus = 1;"
 
+def QryAllSellerProducts():
+    return "SELECT * FROM SellerProducts WHERE SellerId = ?;"
+
 def QryProduct():
     return "SELECT * FROM Products WHERE ProductId = ?"
 

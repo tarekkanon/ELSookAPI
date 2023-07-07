@@ -10,3 +10,8 @@ def GetProduct(product_id):
     with Connection.DBHandler() as DBConn:
         result = DBConn.ReadQuery(ProductsQry.QryProduct(), product_id)
     return result
+
+def GetAllSellerProducts(seller):
+    with Connection.DBHandler() as DBConn:
+        result = DBConn.ReadQuery(ProductsQry.QryAllSellerProducts(), seller)
+    return result
