@@ -8,6 +8,12 @@ def QryAllSellerProducts():
 def QryProduct():
     return "SELECT * FROM Products WHERE ProductId = ?"
 
+def QryProductOptions():
+    return "SELECT * FROM ProductOptions WHERE ProductId = ?"
+
+def QryProductVariants():
+    return "SELECT * FROM ProductVariants WHERE ProductId = ? AND ProductOptionId = ?"
+
 def QryNewProduct():
     return '''INSERT INTO Products 
                 (ProductName, ProductDescription, ProductUnit, ProductStatus, SellerId, SubCategoryId) 
