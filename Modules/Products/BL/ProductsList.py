@@ -6,17 +6,31 @@ def GetAllProducts():
         result = DBConn.ReadQuery(ProductsQry.QryAllProducts())
     return result
 
+'''
+to get single product details with all it's options and all variants of the options
+'''
 def GetProduct(product_id):
     with Connection.DBHandler() as DBConn:
-        product_details = dict()
+
+        # get product first
         product_details = DBConn.ReadQuery(ProductsQry.QryProduct(), product_id)
-        product_options = dict()
+        
+        # then get all product options
         product_options = DBConn.ReadQuery(ProductsQry.QryProductOptions(), product_id)
-        #product_details['options'] = DBConn.ReadQuery(ProductsQry.QryProductOptions(), product_id)
+        
+        # if there is options then get their variants
         if(product_options):
+            # create empty list to hold all options
+            options = []
+
+            # loop on the product options to get each option variant and then add to the options list
             for index, option in enumerate(product_options):
-                product_details[0]['option'] = option
-                option[index] =  DBConn.ReadQuery(ProductsQry.QryProductVariants(), { 'ProductId' : product_id, 'ProductOptionId' : int(option['ProductOptionId'])})
+                variants =  DBConn.ReadQuery(ProductsQry.QryProductVariants(), ( product_id , int(option['ProductOptionId']) ))
+                option['Variants'] = variants
+                options.append(option)
+
+            # then add all the options with their variants to the product details list
+            product_details[0]['Options'] = options
 
     return product_details
 
