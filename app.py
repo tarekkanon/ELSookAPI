@@ -9,6 +9,7 @@ from Modules.Products.BL import ProductsList
 from Modules.Products.BL import CategoriesList
 from Modules.Products.BL import NewCategoriesTags 
 from Modules.Products.BL import NewProducts
+from Modules.Products.BL import UpdateProduct
 from Modules.Sellers.BL import SellerHandler
 from Modules.Customers.BL import CustomerHandler
 from Modules.Orders.BL import OrdersHandler
@@ -65,6 +66,22 @@ def add_product_images():
   product_images = request.json
   imageId = NewProducts.AddProductImages(product_images)
   return jsonify({"message": "Images added", "LastImageId" : imageId}), 200
+
+@app.route("/products/update_option", methods=["PUT"])
+@jwt_required()
+def update_product_option():
+  """Update product option details."""
+  product_option = request.json
+  rowcount = UpdateProduct.UpdateProductOption(product_option)
+  return jsonify({"message": "Product option updated", "rowcount" : rowcount}), 200
+
+@app.route("/products/update_variant", methods=["PUT"])
+@jwt_required()
+def update_product_variant():
+  """Update product variant details."""
+  product_variant= request.json
+  rowcount = UpdateProduct.UpdateProductVariant(product_variant)
+  return jsonify({"message": "Product variant updated", "rowcount" : rowcount}), 200
 
 
 @app.route("/products/upload_images", methods=["POST"])

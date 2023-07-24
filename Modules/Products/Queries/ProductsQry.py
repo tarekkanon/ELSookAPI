@@ -60,3 +60,22 @@ def QryNewProductTags():
                 VALUES
                     (?,?)
             '''
+
+def QryUpdateProductOption():
+    return '''
+                UPDATE ProductOptions
+                SET ProductOptionName = ?
+                    , ProductOptionStatus = ?
+                    , LastUpdateDate = CURRENT_TIMESTAMP
+                WHERE ProductOptionId = ?;
+            '''
+
+def QryUpdateProductVariant():
+    return '''
+                UPDATE ProductVariants
+                SET ProductVariantName = ?
+                    , ProductVariantPrice = ?
+                    , ProductVariantUnit = ?
+                    , LastUpdateDate = CURRENT_TIMESTAMP
+                WHERE ProductVariantId = ?;
+            '''
