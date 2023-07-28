@@ -92,23 +92,25 @@ def __CreateNewProduct(con, product_data):
     ))
     return result
 
-def CreateNewProductOption(con, option_data):
-    result = con.InsertUncommittedQuery(ProductsQry.QryNewProductOption(), (
-    option_data['ProductId'],
-    option_data['ProductOptionName'],
-    option_data['ProductOptionStatus']
+def CreateNewProductOption(option_data):
+    with Connection.DBHandler() as DBConn:
+        result = DBConn.InsertQuery(ProductsQry.QryNewProductOption(), (
+        option_data['ProductId'],
+        option_data['ProductOptionName'],
+        option_data['ProductOptionStatus']
     ))
-    return result
+    return result 
 
-def CreateNewProductVariant(con, variant_data):
-    result = con.InsertUncommittedQuery(ProductsQry.QryNewProductVariant(), (
-    variant_data['ProductId'],
-    variant_data['ProductOptionId'],
-    variant_data['ProductVariantName'],
-    variant_data['ProductVariantPrice'],
-    variant_data['ProductVariantUnit']
+def CreateNewProductVariant(variant_data):
+    with Connection.DBHandler() as DBConn:
+        result = DBConn.InsertQuery(ProductsQry.QryNewProductVariant(), (
+        variant_data['ProductId'],
+        variant_data['ProductOptionId'],
+        variant_data['ProductVariantName'],
+        variant_data['ProductVariantPrice'],
+        variant_data['ProductVariantUnit']
     ))
-    return result
+    return result 
 
 def CreateNewProductImage(con, images_data):
     result = con.InsertUncommittedQuery(ProductsQry.QryNewProductImage(), (

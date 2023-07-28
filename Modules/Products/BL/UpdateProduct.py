@@ -19,3 +19,14 @@ def UpdateProductVariant(product_variant):
         product_variant['ProductVariantId']
     ))
     return result 
+
+def UpdateProduct(product):
+    with Connection.DBHandler() as DBConn:
+        result = DBConn.UpdateQuery(ProductsQry.QryUpdateProduct(), (
+        product['ProductName'],
+        product['ProductDescription'],
+        product['ProductUnit'],
+        product['ProductStatus'],
+        product['ProductId']
+    ))
+    return result 

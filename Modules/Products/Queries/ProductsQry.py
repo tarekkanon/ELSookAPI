@@ -79,3 +79,14 @@ def QryUpdateProductVariant():
                     , LastUpdateDate = CURRENT_TIMESTAMP
                 WHERE ProductVariantId = ?;
             '''
+
+def QryUpdateProduct():
+    return '''
+                UPDATE [Products]
+                SET [ProductName] = ?
+                    ,[ProductDescription] = ?
+                    ,[ProductUnit] = ?
+                    ,[ProductStatus] = ?
+                    ,[LastUpdateDate] = CURRENT_TIMESTAMP
+                WHERE ProductId = ?
+    '''

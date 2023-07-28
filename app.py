@@ -83,6 +83,30 @@ def update_product_variant():
   rowcount = UpdateProduct.UpdateProductVariant(product_variant)
   return jsonify({"message": "Product variant updated", "rowcount" : rowcount}), 200
 
+@app.route("/products/new_option", methods=["POST"])
+@jwt_required()
+def new_product_option():
+  """New product option details."""
+  product_option = request.json
+  product_option_id = NewProducts.CreateNewProductOption(product_option)
+  return jsonify({"message": "product option created", "ProductOptionId" : product_option_id}), 200
+
+@app.route("/products/new_variant", methods=["POST"])
+@jwt_required()
+def new_product_variant():
+  """New product variant details."""
+  product_variant= request.json
+  product_variant_id = NewProducts.CreateNewProductVariant(product_variant)
+  return jsonify({"message": "product variant created", "ProductVariantId" : product_variant_id}), 200
+
+@app.route("/products/update", methods=["PUT"])
+@jwt_required()
+def update_product():
+  """Update product details."""
+  product= request.json
+  rowcount = UpdateProduct.UpdateProduct(product)
+  return jsonify({"message": "Product updated", "rowcount" : rowcount}), 200
+
 
 @app.route("/products/upload_images", methods=["POST"])
 @jwt_required()
