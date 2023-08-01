@@ -27,6 +27,7 @@ def UpdateProduct(product):
         product['ProductDescription'],
         product['ProductUnit'],
         product['ProductStatus'],
+        product['SubCategoryId'],
         product['ProductId']
     ))
     return result 

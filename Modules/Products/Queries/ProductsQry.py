@@ -87,6 +87,7 @@ def QryUpdateProduct():
                     ,[ProductDescription] = ?
                     ,[ProductUnit] = ?
                     ,[ProductStatus] = ?
+                    ,[SubCategoryId] = ?
                     ,[LastUpdateDate] = CURRENT_TIMESTAMP
                 WHERE ProductId = ?
     '''
