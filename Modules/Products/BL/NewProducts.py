@@ -92,6 +92,18 @@ def __CreateNewProduct(con, product_data):
     ))
     return result
 
+def CreateNewSingleProduct(product_data):
+    with Connection.DBHandler() as DBConn:
+        result = DBConn.InsertQuery(ProductsQry.QryNewProduct(), (
+            product_data['ProductName'], 
+            product_data['ProductDescription'],
+            product_data['ProductUnit'],
+            product_data['ProductStatus'],
+            product_data['SellerId'],
+            product_data['SubCategoryId']
+    ))
+    return result
+
 def CreateNewProductOption(option_data):
     with Connection.DBHandler() as DBConn:
         result = DBConn.InsertQuery(ProductsQry.QryNewProductOption(), (

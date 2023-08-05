@@ -50,13 +50,14 @@ def get_seller_products():
   products = ProductsList.GetAllSellerProducts(seller_data['SellerId'])
   return jsonify(products), 200
 
-@app.route("/products", methods=["POST"])
+@app.route("/products/new", methods=["POST"])
 @jwt_required()
 def create_product():
   """Create a new product."""
   #print(get_jwt_identity())
   product_data = request.json
-  productId = NewProducts.AddNewProduct(product_data)
+  #productId = NewProducts.AddNewProduct(product_data)
+  productId = NewProducts.CreateNewSingleProduct(product_data)
   return jsonify({"message": "Product created", "ProductId" : productId}), 200
 
 @app.route("/products/images", methods=["POST"])

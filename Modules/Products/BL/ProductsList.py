@@ -45,5 +45,14 @@ def GetProduct(product_id):
 
 def GetAllSellerProducts(seller):
     with Connection.DBHandler() as DBConn:
-        result = DBConn.ReadQuery(ProductsQry.QryAllSellerProducts(), seller)
+        
+        # define a result holder
+        result = {}
+        
+        # get category details to be used in case of update from frontend
+        result['categories'] = DBConn.ReadQuery(CategoriesQry.QryGetAllActiveCategories())
+
+        # get all seller products
+        result['products'] = DBConn.ReadQuery(ProductsQry.QryAllSellerProducts(), seller)
+        
     return result
