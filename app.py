@@ -313,6 +313,16 @@ def GetAllCustomerOrSellerOrders():
   
   return jsonify(orders), 200
 
+@app.route("/orders/order_line", methods=["GET"])
+@jwt_required()
+def GetSellerOrderLineDetails():
+  """Get the details of the order line for seller."""
+  request_data = request.json
+    
+  orderLine = OrdersHandler.GetAllSellerOrderLine(request_data)
+  
+  return jsonify(orderLine), 200
+
 
 @app.route("/orders/update", methods=["PUT"])
 @jwt_required()

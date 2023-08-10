@@ -15,6 +15,13 @@ def GetAllSellerOrders(seller_data):
         ))
     return result 
 
+def GetAllSellerOrderLine(seller_order_line):
+    with Connection.DBHandler() as DBConn:
+        result = DBConn.ReadQuery(OrdersQry.QryGetSellerOrderLine(), (
+            seller_order_line['OrderLineId']
+        ))
+    return result 
+
 
 def UpdateOrderStatus(order_data):
     with Connection.DBHandler() as DBConn:
