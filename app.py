@@ -334,6 +334,26 @@ def UpdateOrderStatus():
   
   return jsonify({"message": "order status updated", "rows" : row_count}), 200
 
+@app.route("/orders/update/confirm", methods=["PUT"])
+@jwt_required()
+def UpdateOrderConfirm():
+  """Update order status to confirmed."""
+  request_data = request.json
+  
+  row_count = OrdersHandler.UpdateOrderStatusConfirmed(request_data)
+  
+  return jsonify({"message": "order status updated", "rows" : row_count}), 200
+
+@app.route("/orders/update/cancel", methods=["PUT"])
+@jwt_required()
+def UpdateOrderCancelled():
+  """Update order status to cancelled."""
+  request_data = request.json
+  
+  row_count = OrdersHandler.UpdateOrderStatusCancelled(request_data)
+  
+  return jsonify({"message": "order status updated", "rows" : row_count}), 200
+
 @app.route("/orderline/update", methods=["PUT"])
 @jwt_required()
 def UpdateOrderLineQtyPrice():

@@ -32,7 +32,8 @@ def QryNewOrder():
 def QryUpdateOrderStatus():
     return '''
             UPDATE [Orders]
-                SET [OrderStatus] = ?
+                SET [OrderStatus] = ?,
+                    [LastUpdateDate] = CURRENT_TIMESTAMP
                 WHERE [OrderId] = ?
             '''            
             
